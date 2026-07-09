@@ -1,0 +1,15 @@
+services:
+  db-api:
+    build:
+      context: ./db_api
+      dockerfile: Dockerfile
+    image: pin-pyre-db-api:local
+    environment:
+      PORT: "8080"
+      # Add public client IPs here if this is exposed beyond local/private networks.
+      # ALLOWED_IPS: "203.0.113.10,198.51.100.25"
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./db_api/db:/app/db
+    restart: unless-stopped
