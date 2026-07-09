@@ -1,0 +1,65 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+/bin/
+/dist/
+
+# Environment Variables
+.env
+.env.local
+.env.production
+.env.dev
+.env.prod
+.env.test
+
+# Test binary, built with `go test -c`
+*.test
+
+# Code coverage profiles and other test artifacts
+*.out
+coverage.*
+*.coverprofile
+profile.cov
+
+# Dependency directories (remove the comment below to include it)
+# vendor/
+
+# Go workspace file
+go.work
+go.work.sum
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# env files
+venv/
+env/
+ENV/
+.venv/
+.env/
+
+# db files
+*.db
+*.sqlite3
+*.sqlite
+
+# IDE
+.cursor/
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# SSL
+ssl/
+certs/
