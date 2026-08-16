@@ -16,3 +16,11 @@ services:
     volumes:
       - ./db_api/db:/app/db
     restart: unless-stopped
+
+  app:
+    build:
+      context: ./website
+      dockerfile: Dockerfile
+    command: python client.py
+    depends_on:
+      - api
