@@ -14,6 +14,10 @@ func main() {
 	}
 	defer sqlxDB.Close()
 
+	if err := db.Migrate(sqlxDB, "db/migrations"); err != nil {
+		log.Fatal(err)
+	}
+
 	store := db.NewStore(sqlxDB)
 	server := api.NewServer(store)
 	if err := server.Run(); err != nil {
