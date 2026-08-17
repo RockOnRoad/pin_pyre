@@ -18,6 +18,36 @@ def fetch_stock_tyres(limit: int = 50, offset: int = 0) -> list[dict]:
     return response.json()
 
 
+def create_stock_tyre(payload: dict) -> dict:
+    response = requests.post(
+        f"{API_BASE}/stock-tyres",
+        json=payload,
+        timeout=TIMEOUT,
+    )
+    if response.status_code == 409:
+        existing = requests.get(
+            f"{API_BASE}/stock-tyres/own-code/{payload['own_code']}",
+            timeout=TIMEOUT,
+        )
+        existing.raise_for_status()
+        return existing.json()
+    response.raise_for_status()
+    return response.json()
+
+
+def seed_demo_tyre() -> dict:
+    own_code = os.environ.get("DEMO_OWN_CODE", "demo-client-seed")
+    payload = {
+        "own_code": own_code,
+        "brand": "Demo",
+        "model": "Client Seed",
+        "siz": "205/55R16",
+        "seas": "s",
+        "stud": False,
+    }
+    return create_stock_tyre(payload)
+
+
 def display(value) -> str:
     if value is None:
         return "—"
@@ -74,8 +104,11 @@ def print_tyres(tyres: list[dict]) -> None:
 
 def main() -> None:
     try:
-        tyres = fetch_stock_tyres()
+        created = seed_demo_tyre()
         print(f"Connected to {API_BASE}")
+        print(f"Wrote stock tyre {created.get('own_code')} (id={created.get('id')})")
+
+        tyres = fetch_stock_tyres()
         print_tyres(tyres)
     except requests.RequestException as exc:
         print(f"Failed to connect to {API_BASE}: {exc}", file=sys.stderr)

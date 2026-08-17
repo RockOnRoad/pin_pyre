@@ -29,14 +29,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /app
 
-RUN mkdir -p /app/db && chown -R app:app /app
+RUN mkdir -p /app/data && chown -R app:app /app
 COPY --from=build --chown=app:app /cmd/pin-pyre-db-api /cmd/pin-pyre-db-api
+COPY --chown=app:app migrations/ ./migrations/
 
 EXPOSE 8080
 
 ENV PORT=8080
+ENV DB_PATH=/app/data/tyres.db
 
-VOLUME ["/app/db"]
+VOLUME ["/app/data"]
 
 USER app
 

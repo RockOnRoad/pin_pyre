@@ -1,4 +1,4 @@
-DB_URL ?= db/tyres.db
+DB_URL ?= data/tyres.db
 MIGRATIONS_DIR := ./db/migrations
 
 

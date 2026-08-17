@@ -8,13 +8,13 @@ import (
 )
 
 func main() {
-	sqlxDB, err := db.NewSQLite("db/tyres.db")
+	sqlxDB, err := db.NewSQLite("data/tyres.db")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer sqlxDB.Close()
 
-	if err := db.Migrate(sqlxDB, "db/migrations"); err != nil {
+	if err := db.Migrate(sqlxDB, "./migrations"); err != nil {
 		log.Fatal(err)
 	}
 
