@@ -1,5 +1,7 @@
 services:
   db-api:
+    env_file:
+      - ./db_api/.env.dev
     build:
       context: ./db_api
       dockerfile: Dockerfile
